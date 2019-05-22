@@ -1,0 +1,122 @@
+---
+title: "plotting-pathways"
+author: "Taruna Schuelke"
+date: "5/22/2019"
+output: html_document
+---
+
+Load the packages
+
+```{r}
+library(reshape2)
+library(ggplot2)
+library(vegan)
+library(plyr)
+library(data.table)
+library(tidyverse)
+library(tibble)
+library(jcolors)
+jcolors('default')
+library(RColorBrewer)
+library(forcats)
+```
+
+First, we will upload the mapping file with all the metadata associated with our samples.
+
+```{r}
+map_table <- "example-data/mapping-file-w-metadata.txt"
+map_table <- read.table(file.path(map_table), sep = "\t", header = TRUE, check.names = FALSE)
+head(map_table)
+```
+
+Second, we will upload the count data file.
+```{r}
+pthwy <- read.table(file.path("example-data/pathways-count-data.txt"), sep = "\t", header = TRUE, check.names = FALSE)
+View(pthwy)
+```
+
+# Now, let's wrangle some data, eh?!
+
+
+
+```{r}
+merged_obj <- merge(pthwy, map_table)
+head(merged_obj)
+str(merged_obj)
+```
+```{r}
+merged_obj_oceanregion <- merged_obj %>%
+  group_by(OceanRegion) %>%
+  summarise_if(is.numeric, sum, na.rm = TRUE)
+View(merged_obj_oceanregion)
+```
+
+```{r}
+merged_obj_oceanregion_transpose <- merged_obj_oceanregion %>%
+  rownames_to_column %>% 
+  gather(var, value, -rowname) %>% 
+  spread(rowname, value) 
+merged_obj_oceanregion_transpose <- merged_obj_oceanregion_transpose[order(match(merged_obj_oceanregion_transpose$var,names(merged_obj_oceanregion))),]
+colnames(merged_obj_oceanregion_transpose) <- merged_obj_oceanregion_transpose[1,] 
+merged_obj_oceanregion_transpose <- merged_obj_oceanregion_transpose[-1, ]
+head(merged_obj_oceanregion_transpose)
+```
+
+
+```{r}
+sapply(merged_obj_oceanregion_transpose, mode)
+merged_obj_oceanregion_transpose[2:3] = data.matrix(merged_obj_oceanregion_transpose[2:3])
+str(merged_obj_oceanregion_transpose)
+```
+
+```{r}
+for(col in names(merged_obj_oceanregion_transpose)[-1]) {
+  merged_obj_oceanregion_transpose[paste0(col, "_pct")] = merged_obj_oceanregion_transpose[col] / sum(merged_obj_oceanregion_transpose[col])
+}
+head(merged_obj_oceanregion_transpose)
+```
+
+```{r}
+percent_cols <- grep("_pct", colnames(merged_obj_oceanregion_transpose))
+col_keep <- c(percent_cols)
+merged_obj_oceanregion_transpose_perc <- merged_obj_oceanregion_transpose[, c(1, col_keep)]
+head(merged_obj_oceanregion_transpose_perc)
+```
+
+
+```{r}
+merged_obj_oceanregion_transpose_perc$total_pthwy_perc <- rowSums(merged_obj_oceanregion_transpose_perc[,-1])
+head(merged_obj_oceanregion_transpose_perc)
+merged_obj_oceanregion_transpose_perc <- merged_obj_oceanregion_transpose_perc %>% 
+  arrange(desc(merged_obj_oceanregion_transpose_perc$total_pthwy_perc))
+head(merged_obj_oceanregion_transpose_perc)
+```
+
+```{r}
+num_row <- nrow(merged_obj_oceanregion_transpose_perc)
+top_10_perc <- ceiling((1)*num_row)
+merged_obj_oceanregion_transpose_perc_top_10 <- top_n(merged_obj_oceanregion_transpose_perc, top_10_perc)
+merged_obj_oceanregion_transpose_perc_top_10$total_pthwy_perc <- NULL
+names(merged_obj_oceanregion_transpose_perc_top_10) <- gsub(x = names(merged_obj_oceanregion_transpose_perc_top_10),
+                                                            pattern = "_pct", replacement = "")
+head(merged_obj_oceanregion_transpose_perc_top_10)
+```
+
+```{r}
+merged_obj_oceanregion_transpose_perc_top_10 <- merged_obj_oceanregion_transpose_perc_top_10 %>%
+  rename(
+    "Beaufort Sea" = "BeaufortSea",
+    "Gulf of Mexico" = "GulfofMexico")
+merged_obj_oceanregion_transpose_perc_top_10.molten <- melt(merged_obj_oceanregion_transpose_perc_top_10, value.name="Count", variable.name="Variable", na.rm=TRUE)
+```
+
+```{r}
+plot <- ggplot(merged_obj_oceanregion_transpose_perc_top_10.molten) +
+  geom_col(aes(x = OceanRegion, y = Count, fill = Variable), position = 'dodge') +
+  coord_flip() +
+  labs(x = "Pthwy ID", y = "Rel. abundance") +
+  #scale_fill_manual(values = c(col_vector))
+  scale_fill_manual(values = c("darkgreen",
+                               "darkgrey"))
+plot
+```

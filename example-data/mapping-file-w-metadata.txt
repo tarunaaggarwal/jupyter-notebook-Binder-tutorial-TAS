@@ -1,0 +1,14 @@
+SampleID	NematodeOrder	NematodeFamily	NematodeGenus	NematodeID	NematodeID_combined	FeedingGroup	MorphVoucher	Year	OceanRegion	Habitat	Depth	Latitude	Longitude	SampleSite	DNA_Extraction	PickedBy	phinchID	Description
+16Snem1	unknown	unknown	unknown	Nematoda	Nematoda	unknown	No	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	water+WLB	Holly	16Snem1	Seep.nema
+16Snem11	unknown	unknown	unknown	Nematoda	Nematoda	unknown	No	2007	GulfofMexico	Seep	2391	26.38718	-93.5129317	AC601.130	water+WLB	Holly	16Snem11	Seep.nema
+16Snem100	Monhysterida	Xyalidae	Daptonema	Daptonema	Daptonema	1B	No	2013	BeaufortSea	Arctic	750	70.4335	-138.9834	Gry.06	WLB	Tiago	16Snem100	Arctic.nema
+16Snem101	Enoplida	Oncholaimidae	Oncholaimidae	Oncholaimidae	Oncholaimidae	2B	No	2007	GulfofMexico	NotSeep	2222	27.6481933	-88.3747217	AT340.209	WLB	Tiago	16Snem101	NotSeep.nema
+16Snem102	unknown	unknown	unknown	Nematoda	Nematoda	unknown	No	2007	GulfofMexico	NotSeep	2222	27.6481933	-88.3747217	AT340.209	WLB	Tiago	16Snem102	NotSeep.nema
+16Snem103	Chromadorida	Desmoscolecidae	Desmocolex	Desmocolex_sp3	Desmocolex	1A	Yes	2007	GulfofMexico	NotSeep	2222	27.6481933	-88.3747217	AT340.209	WLB	Tiago	16Snem103	NotSeep.nema
+16Snem105	Chromadorida	Desmoscolecidae	Desmocolex	Desmocolex_sp1	Desmocolex	1A	No	2007	GulfofMexico	NotSeep	2222	27.6481933	-88.3747217	AT340.209	WLB	Tiago	16Snem105	NotSeep.nema
+16Snem106	Enoplida	Oncholaimidae	Viscosia	Viscosia	Viscosia	2B	Yes	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem106	Seep.nema
+16Snem108	Chromadorida	Ethmolaimidae	Comesa	Comesa	Comesa	2A	Yes	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem108	Seep.nema
+16Snem109	unknown	unknown	unknown	Nematoda	Nematoda	unknown	Yes	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem109	Seep.nema
+16Snem110	Chromadorida	Cyatholaimidae	Cyatholaimidae	Cyatholaimidae	Cyatholaimidae	2A	Yes	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem110	Seep.nema
+16Snem111	Chromadorida	Cyatholaimidae	Paracanthonchus	Paracanthonchus	Paracanthonchus	2A	Yes	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem111	Seep.nema
+16Snem112	unknown	unknown	unknown	Nematoda	Nematoda	unknown	No	2007	GulfofMexico	Seep	1425	27.119967	-91.165083	GC852.16	WLB	Tiago	16Snem112	Seep.nema
